@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Travel modes in directions</title>
+
+  </head>
+  <body>
+
+    <label>Origem: </label>
+    <input type="text" id="origem"/>
+
+
+    <label>Destino: </label>
+    <input type="text" id="destino"/>
+
+    <button id="botao">Calcular distância</button>
+
+    <strong><span id="resultado"></span></strong>
+
+    <script>
+        var btn = document.querySelector("#botao");
+
+        btn.addEventListener("click", () =>{
+            var start = document.getElementById("origem").value;
+            var end = document.getElementById("destino").value;
+
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: 'DRIVING'
+             };
+
+             var directionsService = new google.maps.DirectionsService();
+
+             directionsService.route(request, function(result, status) {
+                if (status == 'OK') {
+                  document.getElementById("resultado").textContent = result.routes[0].legs[0].distance.text;
+                }else{
+                    console.log(result)
+                }
+             });
+        })
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjer8EiiGCt8DlL3LZ4Ra75gfACmXkJLk&callback=initMap">
+    </script>
+  </body>
+</html>
